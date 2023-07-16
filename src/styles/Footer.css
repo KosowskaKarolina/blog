@@ -1,0 +1,33 @@
+.footer {
+    width: 100%;
+    height: 70px;
+  }
+  .socialMedia svg {
+    color: rgb(28, 103, 103);
+    margin: 18px;
+    font-size: 24px;
+  }
+  .socialMedia{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+  }
+  .footer span{
+    margin: 25px;
+  }
+  @media only screen and (max-width: 900px) {
+    .footer .socialMedia {
+      width: 70px;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .footer {
+      justify-content: flex-end;
+    }
+  }
+  .navbar .brandName{
+    font-size: 24px;
+    letter-spacing: 18px;
+  }
+  
