@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
-import Records from '../jsonplaceholder.json';
+import React, { useState, useEffect } from 'react';
 import '../styles/Blog.css';
+
 function Blog() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [records, setRecords] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts/')
+      .then((response) => response.json())
+      .then((data) => setRecords(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
 
   const handleSearchChange = (event) => {
-    const { value } = event.target;
-    setSearchQuery(event.target);
+    setSearchQuery(event.target.value);
   };
 
   const filteredAndSortedRecords = () => {
     if (searchQuery) {
       const lowerCaseQuery = searchQuery.toLowerCase();
-      return Records.filter((record) =>
-        record.title.toLowerCase().includes(lowerCaseQuery)
-      ).sort((a, b) => b.title.length - a.title.length);
+      return records
+        .filter((record) => record.title.toLowerCase().includes(lowerCaseQuery))
+        .sort((a, b) => b.title.length - a.title.length);
     }
-    return Records;
+    return records;
   };
 
   const sortedRecords = filteredAndSortedRecords();
