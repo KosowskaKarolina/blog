@@ -14,15 +14,15 @@ function Navbar() {
       <div className='leftSide' id={openLinks ? "open" : "close"}>
         <a href='/' className='brandName'>LOREM GARAGE</a>
         <div className='hiddenLinks'>
-        <Link to="/">Home</Link>
-        <Link to="/blog">Blog</Link>
-        <Link to="/about">About</Link>
+        <Link to="/" className='link-nav'>Home</Link>
+        <Link to="/blog" className='link-nav'>Blog</Link>
+        <Link to="/about" className='link-nav'>About</Link>
         </div>
       </div>
       <div className='rightSide'>
-        <Link to="/">Home</Link>
-        <Link to="/blog">Blog</Link>
-        <Link to="/about">About</Link>
+        <Link to="/" className='link-nav'>Home</Link>
+        <Link to="/blog" className='link-nav'>Blog</Link>
+        <Link to="/about" className='link-nav'>About</Link>
         <button onClick = {toggleNavbar} id='menu'><ReorderIcon></ReorderIcon></button>
       </div>
     </div>

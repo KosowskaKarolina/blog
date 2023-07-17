@@ -1,61 +1,73 @@
 import React, { useState } from 'react';
 import Records from '../jsonplaceholder.json';
 import '../styles/Blog.css';
-
 function Blog() {
-  const [sortOption, setSortOption] = useState('sort-default');
-  const sortByInteresting = () => {
-    const sortedRecords = [...Records];
-    sortedRecords.sort((a, b) => {
-      if (a.body.length === b.body.length) {
-        return a.id - b.id;
-      } else {
-        return b.body.length - a.body.length;
-      }
-    });
-    return sortedRecords;
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (event) => {
+    const { value } = event.target;
+    setSearchQuery(event.target);
   };
 
-  const handleSortChange = (event) => {
-    setSortOption(event.target.value);
+  const filteredAndSortedRecords = () => {
+    if (searchQuery) {
+      const lowerCaseQuery = searchQuery.toLowerCase();
+      return Records.filter((record) =>
+        record.title.toLowerCase().includes(lowerCaseQuery)
+      ).sort((a, b) => b.title.length - a.title.length);
+    }
+    return Records;
   };
 
-  let sortedRecords;
-  if (sortOption === 'the-most-interesting') {
-    sortedRecords = sortByInteresting();
-  } else {
-    sortedRecords = Records;
-  }
+  const sortedRecords = filteredAndSortedRecords();
+
+  const blogClassName = searchQuery ? 'blog-inline' : 'blog';
 
   return (
-    <div className='blog'>
-      <div className='sort'>
-        <div className='sort-posts'>
-          <form action='#'>
-            <label htmlFor='sort' id='label-sort'>Sort by: </label>
-            <select
-              name='sortby'
-              id='sortby'
-              className='sort-section'
-              value={sortOption}
-              onChange={handleSortChange}
-            >
-              <option value='sort-default'>Default</option>
-              <option value='the-most-interesting'>The most interesting</option>
-            </select>
-          </form>
-        </div>
+    <>
+      <div className='search'>
+        <input
+          type='text'
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder='Search'
+          id='searchBar'
+        />
       </div>
+      <div className={blogClassName}>
+        {sortedRecords.map((record) => {
+          let titleElement;
 
-      {sortedRecords.map((record) => {
-        return (
-          <div className='record' key={record.id}>
-            <h2>{record.title}</h2>
-            <p>{record.body}</p>
-          </div>
-        );
-      })}
-    </div>
+          if (record.title.toLowerCase().includes(searchQuery.toLowerCase())) {
+            titleElement = (
+              <span>
+                {record.title.split(new RegExp(`(${searchQuery})`, 'i')).map((part, index) => {
+                  if (part.toLowerCase() === searchQuery.toLowerCase()) {
+                    return (
+                      <span key={index} className='highlight'>
+                        {part}
+                      </span>
+                    );
+                  } else {
+                    return <span key={index}>{part}</span>;
+                  }
+                })}
+              </span>
+            );
+          } else {
+            titleElement = <span>{record.title}</span>;
+          }
+
+          return (
+            <div className='record' key={record.id}>
+              <h2>{titleElement}</h2>
+              <p>{record.body}</p>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }
+
 export default Blog;

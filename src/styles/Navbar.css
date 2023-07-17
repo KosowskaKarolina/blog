@@ -19,14 +19,12 @@
     justify-content: center;
   }
   .navbar a {
-    color: rgb(28, 103, 103);
     text-decoration: none;
     margin: 20px;
   }
   .navbar #menu{
     background-color: transparent;
     border: none;
-    color: rgb(44, 135, 135);
     cursor: pointer;
   }
   .navbar .rightSide svg {
@@ -55,9 +53,18 @@
   .navbar #lightMode, #darkMode{
     background-color: transparent;
     border: none;
-    color: rgb(44, 135, 135);
     cursor: pointer;
+
 }
+.navbar .link-nav{
+  transition: 0.2s ease-in;
+}
+.navbar .link-nav:hover{
+  color: rgb(18, 150, 150);
+  transition: 0.3s ease-in;
+  letter-spacing: 2px;
+
+  }
   @media only screen and (max-width: 900px) {
     .navbar .rightSide a {
       width: 70px;
